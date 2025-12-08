@@ -21,9 +21,10 @@ class Session:
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         self.messages: List[Dict[str, Any]] = []
+        self.attachments: List[Dict[str, Any]] = []
         self.metadata: Dict[str, Any] = {}
     
-    def add_message(self, role: str, content: str, metadata: Optional[Dict[str, Any]] = None):
+    def add_message(self, role: str, content: str, metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Add a message to the session.
         
@@ -33,6 +34,7 @@ class Session:
             metadata: Optional message metadata.
         """
         message = {
+            'id': str(uuid.uuid4()),
             'role': role,
             'content': content,
             'timestamp': datetime.now(),
@@ -40,6 +42,23 @@ class Session:
         }
         self.messages.append(message)
         self.updated_at = datetime.now()
+        return message
+    
+    def add_attachment(self, attachment: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Add an attachment to the session metadata.
+        
+        Args:
+            attachment: Attachment metadata (e.g., filename, url, content_type, size).
+        """
+        attachment_record = {
+            'id': str(uuid.uuid4()),
+            'timestamp': datetime.now(),
+            **attachment
+        }
+        self.attachments.append(attachment_record)
+        self.updated_at = datetime.now()
+        return attachment_record
     
     def get_history(self, limit: Optional[int] = None) -> List[Dict[str, Any]]:
         """
@@ -67,6 +86,7 @@ class Session:
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat(),
             'message_count': len(self.messages),
+            'attachment_count': len(self.attachments),
             'metadata': self.metadata
         }
 

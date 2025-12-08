@@ -21,6 +21,12 @@ neo4j>=5.0.0  # Neo4j driver (optional, for graph storage)
 openai>=1.0.0  # OpenAI API client
 anthropic>=0.7.0  # Anthropic API client (optional)
 
+# LangChain for orchestration and chain-of-thought
+langchain>=0.1.0  # LangChain core
+langchain-openai>=0.0.5  # OpenAI integration for LangChain
+langchain-anthropic>=0.1.0  # Anthropic integration (optional)
+langchain-community>=0.0.20  # Community integrations
+
 # Embedding and ML
 scikit-learn>=1.3.0
 torch>=2.0.0  # PyTorch (optional, for custom embeddings)
