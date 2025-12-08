@@ -5,6 +5,11 @@ pydantic>=2.0.0
 # Knowledge graph extraction
 itext2kg>=0.1.0  # For knowledge graph construction from text
 
+# Knowledge graph embedding
+# MAYPL: Clone from https://github.com/bdi-lab/MAYPL.git
+# See scripts/setup_maypl.py for setup instructions
+torch>=2.0.0  # Required for MAYPL
+
 # Document processing
 PyMuPDF>=1.23.0  # For PDF parsing
 python-docx>=1.0.0  # For DOCX parsing

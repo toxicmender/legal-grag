@@ -47,7 +47,18 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Set up environment variables (create a `.env` file):
+4. Set up MAYPL (for knowledge graph embedding):
+```bash
+# Option 1: Use setup script
+python scripts/setup_maypl.py
+
+# Option 2: Manual setup
+git clone https://github.com/bdi-lab/MAYPL.git
+export MAYPL_PATH=$(pwd)/MAYPL
+cd MAYPL && pip install -r requirements.txt
+```
+
+5. Set up environment variables (create a `.env` file):
 ```env
 NEO4J_URI=neo4j://localhost:7687
 NEO4J_USERNAME=neo4j
@@ -55,6 +66,7 @@ NEO4J_PASSWORD=your_password
 LLM_PROVIDER=openai
 LLM_MODEL=gpt-4
 LLM_API_KEY=your_api_key
+MAYPL_PATH=/path/to/MAYPL  # Path to MAYPL repository
 ```
 
 ## Quick Start
@@ -87,7 +99,29 @@ graph_builder = GraphBuilder()
 graph = graph_builder.build_from_entities_relations(entities, relations)
 ```
 
-### 3. Query the Knowledge Graph
+### 3. Create Graph Embeddings
+
+```python
+from kg_embedding.maypl_wrapper import MAYPLWrapper
+
+# Initialize MAYPL embedder
+embedder = MAYPLWrapper(embedding_dim=128)
+
+# Prepare graph data
+graph_data = {
+    'entities': list(graph.entities.values()),
+    'relations': list(graph.relations.values())
+}
+
+# Train the model
+embedder.fit(graph_data, train_epochs=100)
+
+# Extract embeddings
+entity_embedding = embedder.embed_entity("entity_id", {"id": "entity_id"})
+relation_embedding = embedder.embed_relation("relation_id", {"id": "relation_id"})
+```
+
+### 4. Query the Knowledge Graph
 
 ```python
 from retrieval.retriever import SubgraphRetriever
@@ -100,7 +134,7 @@ result = integration.retrieve_context("What are the key legal concepts?", top_k=
 print(result['context'])
 ```
 
-### 4. Run the API Server
+### 5. Run the API Server
 
 ```bash
 python -m serving.api.main
@@ -175,7 +209,9 @@ mypy .
 
 ### Graph Embedding
 - **embedder_interface.py**: Embedding interface
-- **maypl_wrapper.py**: Custom MAYPL algorithm wrapper
+- **maypl_wrapper.py**: MAYPL algorithm wrapper ([MAYPL repository](https://github.com/bdi-lab/MAYPL.git))
+  - Structural representation learning for hyper-relational knowledge graphs
+  - ICML 2025: "Structure Is All You Need"
 - **fallback_embedder.py**: Fallback to other KGE libraries
 - **cache.py**: Embedding caching and persistence
 - **utils.py**: Utility functions
