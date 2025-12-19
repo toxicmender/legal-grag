@@ -2,7 +2,7 @@
 Interface to build or update Knowledge Graph (entities + relations).
 """
 
-from typing import List, Optional, Dict, Any
+from typing import List, Optional
 from .models import Entity, Relation, Statement, KnowledgeGraph
 from .storage import KGStorage
 

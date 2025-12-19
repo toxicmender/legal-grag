@@ -2,7 +2,7 @@
 Base prompt templates and prompt-builder utilities.
 """
 
-from typing import Dict, Any, Optional, List
+from typing import Dict, Optional, List
 from dataclasses import dataclass
 from string import Template
 

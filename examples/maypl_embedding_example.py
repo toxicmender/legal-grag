@@ -13,7 +13,7 @@ from typing import Optional
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from kg_construction.models import Entity, Relation, KnowledgeGraph
+from kg_construction.models import Entity, Relation
 from kg_construction.graph_builder import GraphBuilder
 from kg_embedding.maypl_wrapper import MAYPLWrapper
 
@@ -45,7 +45,7 @@ def example_maypl_embedding(
     graph = graph_builder.build_from_entities_relations(entities, relations)
     
     stats = graph.get_statistics()
-    print(f"✓ Knowledge graph prepared:")
+    print("✓ Knowledge graph prepared:")
     print(f"  Entities: {stats['entity_count']}")
     print(f"  Relations: {stats['relation_count']}")
     print(f"  Entity types: {stats['entity_types']}")

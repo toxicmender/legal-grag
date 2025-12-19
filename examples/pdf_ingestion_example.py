@@ -68,7 +68,7 @@ def example_pdf_ingestion(pdf_path: str):
         # Show first page text if available
         if 'pages' in result and result['pages']:
             first_page = result['pages'][0]
-            print(f"\nFirst page text (first 200 chars):")
+            print("\nFirst page text (first 200 chars):")
             print(f"{first_page['text'][:200]}...")
             
     except Exception as e:

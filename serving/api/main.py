@@ -2,9 +2,9 @@
 FastAPI application with routes for user queries, ingestion, retrieval, etc.
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Dict, Any, Optional
+from typing import Optional
 import uvicorn
 
 from .routes import router

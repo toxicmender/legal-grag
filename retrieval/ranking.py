@@ -3,7 +3,6 @@ Rank candidate subgraphs, nodes, and paths.
 """
 
 from typing import List, Dict, Any, Optional
-import numpy as np
 
 
 class SubgraphRanker:

@@ -3,7 +3,6 @@ Convert attribution data to human-friendly visualizations (graphs / html).
 """
 
 from typing import Dict, Any, Optional, List
-from pathlib import Path
 
 
 class ExplanationVisualizer:

@@ -2,7 +2,7 @@
 Higher-level API: given a response + subgraph + prompt, produce explanation.
 """
 
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional
 from .circuit_tracer import CircuitTracer
 from .shap_wrapper import SHAPWrapper
 

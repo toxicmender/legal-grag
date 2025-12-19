@@ -48,7 +48,7 @@ class EmbeddingCache:
                     embedding = pickle.load(f)
                 self.memory_cache[key] = embedding
                 return embedding
-            except Exception as e:
+            except Exception:
                 # TODO: Log error
                 return None
         
@@ -72,7 +72,7 @@ class EmbeddingCache:
             try:
                 with open(cache_file, 'wb') as f:
                     pickle.dump(embedding, f)
-            except Exception as e:
+            except Exception:
                 # TODO: Log error
                 pass
     
@@ -113,7 +113,7 @@ class EmbeddingCache:
             for cache_file in self.cache_dir.glob("*.pkl"):
                 try:
                     cache_file.unlink()
-                except Exception as e:
+                except Exception:
                     # TODO: Log error
                     pass
     

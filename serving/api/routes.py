@@ -2,10 +2,11 @@
 API route definitions.
 """
 
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 from datetime import datetime
+from serving.session_manager import SessionManager
 
 router = APIRouter()
 
@@ -94,11 +95,11 @@ class ChatAttachmentResponse(BaseModel):
 async def query_endpoint(request: Request, query_req: QueryRequest):
     """
     Handle user queries.
-    
+
     Args:
         request: FastAPI request object.
         query_req: Query request model.
-        
+
     Returns:
         Query response with answer and optional explanation.
     """
@@ -108,7 +109,7 @@ async def query_endpoint(request: Request, query_req: QueryRequest):
     # 3. Generate response using LLM
     # 4. Optionally generate explanation
     # 5. Return response
-    
+
     raise HTTPException(status_code=501, detail="Query endpoint not yet implemented")
 
 
@@ -116,11 +117,11 @@ async def query_endpoint(request: Request, query_req: QueryRequest):
 async def ingest_endpoint(request: Request, ingest_req: IngestRequest):
     """
     Handle document ingestion.
-    
+
     Args:
         request: FastAPI request object.
         ingest_req: Ingest request model.
-        
+
     Returns:
         Ingest response with document ID and status.
     """
@@ -130,7 +131,7 @@ async def ingest_endpoint(request: Request, ingest_req: IngestRequest):
     # 3. Extract entities and relations
     # 4. Build/update knowledge graph
     # 5. Return document ID
-    
+
     raise HTTPException(status_code=501, detail="Ingest endpoint not yet implemented")
 
 
@@ -138,20 +139,20 @@ async def ingest_endpoint(request: Request, ingest_req: IngestRequest):
 async def get_session(request: Request, session_id: str):
     """
     Get session information.
-    
+
     Args:
         request: FastAPI request object.
         session_id: Session ID.
-        
+
     Returns:
         Session information.
     """
     session_manager: 'SessionManager' = request.app.state.session_manager
     session = session_manager.get_session(session_id)
-    
+
     if not session:
         raise HTTPException(status_code=404, detail="Session not found")
-    
+
     return session
 
 
@@ -159,20 +160,20 @@ async def get_session(request: Request, session_id: str):
 async def delete_session(request: Request, session_id: str):
     """
     Delete a session.
-    
+
     Args:
         request: FastAPI request object.
         session_id: Session ID.
-        
+
     Returns:
         Deletion status.
     """
     session_manager: 'SessionManager' = request.app.state.session_manager
     success = session_manager.delete_session(session_id)
-    
+
     if not success:
         raise HTTPException(status_code=404, detail="Session not found")
-    
+
     return {"status": "deleted", "session_id": session_id}
 
 
@@ -180,10 +181,10 @@ async def delete_session(request: Request, session_id: str):
 async def get_graph_stats(request: Request):
     """
     Get knowledge graph statistics.
-    
+
     Args:
         request: FastAPI request object.
-        
+
     Returns:
         Graph statistics.
     """
@@ -195,11 +196,11 @@ async def get_graph_stats(request: Request):
 async def get_entity(request: Request, entity_id: str):
     """
     Get entity information.
-    
+
     Args:
         request: FastAPI request object.
         entity_id: Entity ID.
-        
+
     Returns:
         Entity information.
     """
@@ -211,11 +212,11 @@ async def get_entity(request: Request, entity_id: str):
 async def get_relation(request: Request, relation_id: str):
     """
     Get relation information.
-    
+
     Args:
         request: FastAPI request object.
         relation_id: Relation ID.
-        
+
     Returns:
         Relation information.
     """

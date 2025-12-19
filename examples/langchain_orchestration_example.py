@@ -13,8 +13,7 @@ from typing import Optional
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from prompting.orchestrator import ReasoningOrchestrator, AgentOrchestrator
-from prompting.chain_of_thought import ChainOfThought
+from prompting.orchestrator import ReasoningOrchestrator
 from prompting.prompt_config import PromptConfig
 from retrieval.integration import RetrievalIntegration
 from retrieval.retriever import SubgraphRetriever
@@ -95,7 +94,7 @@ def example_reasoning_orchestrator(
         return None
     
     # Step 4: Process query
-    print(f"\n--- Step 4: Process Query ---")
+    print("\n--- Step 4: Process Query ---")
     print(f"Query: {query}")
     
     try:
@@ -124,7 +123,7 @@ def example_reasoning_orchestrator(
         # Show validation if available
         if result.get('validation'):
             validation = result['validation']
-            print(f"\nValidation:")
+            print("\nValidation:")
             print(f"  Valid: {validation.get('is_valid', 'Unknown')}")
             if validation.get('issues'):
                 print(f"  Issues: {validation['issues']}")
@@ -189,7 +188,7 @@ def example_multi_hop_reasoning(
             top_k=5
         )
         
-        print(f"\n✓ Multi-hop reasoning completed!")
+        print("\n✓ Multi-hop reasoning completed!")
         print(f"\nFinal Response: {result['response']}")
         print(f"\nReasoning Path: {' -> '.join(result['path'])}")
         print(f"\nConclusion: {result['conclusion']}")

@@ -2,7 +2,7 @@
 Fallback embedder using other KGE libraries (e.g., Pykg2vec) for baseline.
 """
 
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 import numpy as np
 from .embedder_interface import EmbedderInterface
 
