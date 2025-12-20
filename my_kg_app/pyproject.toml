@@ -1,0 +1,16 @@
+[project]
+name = "my_kg_app"
+version = "0.1.0"
+description = "Knowledge graph pipeline scaffold"
+requires-python = "^3.10"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "pytest",
+    "python-dotenv",
+    "neo4j",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

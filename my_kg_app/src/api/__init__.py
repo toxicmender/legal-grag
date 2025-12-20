@@ -1,0 +1,1 @@
+"""API package for serving the KG application (FastAPI)."""
