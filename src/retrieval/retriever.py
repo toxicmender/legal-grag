@@ -3,6 +3,9 @@
 This module contains simple retrieval helpers. Replace with repository-backed
 implementations that query Neo4j or another graph store.
 """
+from kg.storage import KGStorageInterface
+from kg.construction import KnowledgeGraph
+
 
 def retrieve(query: str, top_k: int = 10) -> list:
     # Placeholder: query the graph store and return candidate nodes/subgraphs
@@ -13,12 +16,11 @@ def retrieve_subgraph(query: str) -> dict:
     """Compatibility helper: return a single subgraph for generation flows."""
     return {"nodes": [], "edges": []}
 
-from typing import Optional
-from kg.construction import KGStorage
-from kg.construction import KnowledgeGraph
-
 class KGRetriever:
-    def __init__(self, storage: KGStorage, embedder=None):
+    def __init__(self, storage: KGStorageInterface, embedder=None):
+        """Storage should implement `KGStorageInterface` so this retriever
+        is independent of the actual backend (Neo4j, in-memory, file, etc.).
+        """
         self.storage = storage
         self.embedder = embedder
 

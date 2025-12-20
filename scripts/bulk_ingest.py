@@ -1,5 +1,4 @@
 """Script to bulk ingest documents from a directory (placeholder)."""
-from src.ingestion.loader import load_pdf
 
 
 def bulk_ingest(directory: str):

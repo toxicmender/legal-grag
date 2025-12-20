@@ -130,31 +130,6 @@ class KGExtractor:
         # ...
         return kg
 
-# project_root/kg_construction/storage.py
-
-# Import Neo4j driver if installed; placeholder here
-from neo4j import GraphDatabase
-
-class KGStorage (GraphDatabase):
-    def __init__(self, uri: str, user: str = None, password: str = None):
-        # Example: uri = "bolt://localhost:7687"
-        self.uri = uri
-        self.user = user
-        self.password = password
-        # self.driver = GraphDatabase.driver(uri, auth=(user, password))
-
-    def save_graph(self, kg: KnowledgeGraph):
-        """
-        Persist the KnowledgeGraph to Neo4j (or other backend).
-        """
-        # TODO: implement mapping of Entity / Relation / Triple to nodes/edges in Neo4j
-        pass
-
-    def load_graph(self, query: str) -> KnowledgeGraph:
-        """
-        Load a subgraph or full graph using a query or other criteria.
-        Returns a KnowledgeGraph object.
-        """
-        # TODO: implement retrieval from backend
-        kg = KnowledgeGraph()
-        return kg
+# Storage implementations are provided in a separate module to keep the
+# construction utilities independent from any particular backend. Import
+# the interface/adapter from `kg.storage` when you need a concrete storage.

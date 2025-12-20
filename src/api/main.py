@@ -7,7 +7,13 @@ from config.settings import Settings  # hypothetical settings loader
 
 def create_app() -> FastAPI:
     app = FastAPI(title="my_kg_app API")
-    # you can add routers, middleware, dependencies here
+    # attach routers and shared settings
+    settings = Settings()
+    app.state.settings = settings
+    # include routers defined in src/api/routers
+    app.include_router(ingestion_router.router)
+    app.include_router(query_router.router)
+    app.include_router(explain_router.router)
     return app
 
 app = create_app()
@@ -26,7 +32,7 @@ async def ingest(file: UploadFile = File(...)):
     try:
         contents = await file.read()
         # TODO: save to temp file or pass bytes to ingestion
-        return {"status": "ingested", "filename": file.filename}
+        return {"status": "ingested", "filename": file.filename, "size": len(contents)}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
