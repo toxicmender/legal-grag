@@ -3,7 +3,7 @@
 This is a placeholder that demonstrates wiring between modules.
 """
 from src.ingestion.loader import load_pdf
-from src.kg_builder.builder import build_kg_from_text
+from kg import build_kg_from_text
 from src.graph_learning.embedder import embed
 
 

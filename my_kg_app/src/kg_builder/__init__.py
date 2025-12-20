@@ -1,1 +1,0 @@
-"""KG builder package: convert parsed text to a KG (iText2KG adapters)."""

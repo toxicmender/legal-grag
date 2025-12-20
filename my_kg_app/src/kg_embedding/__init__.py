@@ -1,1 +1,0 @@
-"""kg_embedding package: embedder interfaces and implementations."""
