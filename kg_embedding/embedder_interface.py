@@ -5,7 +5,7 @@ Defines the interface for embedding entities and relations into vector spaces.
 """
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 import numpy as np
 
 

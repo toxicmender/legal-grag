@@ -9,7 +9,6 @@ import os
 from typing import Optional
 from pathlib import Path
 from ingestion.loader import DocumentLoader
-from ingestion.parser import DocumentParser
 from kg_construction.distiller import DocumentDistiller
 from kg_construction.extractor import EntityRelationExtractor
 from kg_construction.graph_builder import GraphBuilder
@@ -30,7 +29,6 @@ def example_kg_construction(pdf_path: str, openai_api_key: Optional[str] = None)
     # Step 1: Ingest and parse the document
     print("\n--- Step 1: Document Ingestion ---")
     loader = DocumentLoader()
-    parser = DocumentParser()
     
     pdf_file = Path(pdf_path)
     if not pdf_file.exists():
@@ -111,7 +109,7 @@ def example_kg_construction(pdf_path: str, openai_api_key: Optional[str] = None)
         graph = graph_builder.build_from_entities_relations(entities, relations)
         
         stats = graph.get_statistics()
-        print(f"✓ Knowledge graph built successfully!")
+        print("✓ Knowledge graph built successfully!")
         print(f"  Entities: {stats['entity_count']}")
         print(f"  Relations: {stats['relation_count']}")
         print(f"  Entity types: {stats['entity_types']}")

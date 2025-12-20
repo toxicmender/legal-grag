@@ -2,7 +2,7 @@
 Document parser using PyMuPDF (or other libraries) to extract text from PDFs and documents.
 """
 
-from typing import Optional, Dict, Any, Union, List
+from typing import Dict, Any, Union
 from pathlib import Path
 import fitz  # PyMuPDF
 

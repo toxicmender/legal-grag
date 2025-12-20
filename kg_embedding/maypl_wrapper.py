@@ -28,14 +28,11 @@ try:
     # These imports may need adjustment based on MAYPL's actual code structure
     try:
         from code.model import MAYPL  # Adjust import path as needed
-        from code.data_loader import DataLoader  # Adjust import path as needed
         MAYPL_AVAILABLE = True
     except ImportError:
         # Alternative import paths
         try:
-            import maypl
             from maypl.model import MAYPL
-            from maypl.data_loader import DataLoader
             MAYPL_AVAILABLE = True
         except ImportError:
             pass
@@ -255,10 +252,8 @@ class MAYPLWrapper(EmbedderInterface):
             **training_kwargs: Additional training parameters.
         """
         # Convert graph data to MAYPL format
+        # Note: _convert_to_maypl_format() already calls _build_mappings() internally
         triples, qualifiers = self._convert_to_maypl_format(graph_data)
-        
-        # Build entity and relation mappings
-        self._build_mappings(graph_data)
         
         # Initialize MAYPL model
         num_entities = len(self.entity_id_to_idx)
@@ -285,6 +280,7 @@ class MAYPLWrapper(EmbedderInterface):
         print(f"Training MAYPL model on {len(triples)} triples...")
         for epoch in range(train_epochs):
             total_loss = 0.0
+            num_batches = 0
             for batch in self._create_batches(train_data, batch_size):
                 optimizer.zero_grad()
                 
@@ -311,9 +307,10 @@ class MAYPLWrapper(EmbedderInterface):
                 optimizer.step()
                 
                 total_loss += loss.item()
+                num_batches += 1
             
             if (epoch + 1) % 10 == 0:
-                avg_loss = total_loss / len(train_data) * batch_size
+                avg_loss = total_loss / num_batches if num_batches > 0 else 0.0
                 print(f"Epoch {epoch + 1}/{train_epochs}, Average Loss: {avg_loss:.4f}")
         
         self.is_trained = True
@@ -404,7 +401,6 @@ class MAYPLWrapper(EmbedderInterface):
         Returns:
             Tuple of (triples, qualifiers) in MAYPL format.
         """
-        entities = graph_data.get('entities', [])
         relations = graph_data.get('relations', [])
         
         # Build mappings first

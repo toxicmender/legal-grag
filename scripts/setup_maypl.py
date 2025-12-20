@@ -4,7 +4,6 @@ Setup script for MAYPL integration.
 This script helps set up the MAYPL repository for use with the kg_embedding module.
 """
 
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -52,7 +51,7 @@ def setup_maypl(maypl_dir: str = "maypl", clone_url: str = "https://github.com/b
     # Install requirements
     requirements_file = maypl_path / "requirements.txt"
     if requirements_file.exists():
-        print(f"\nInstalling MAYPL requirements...")
+        print("\nInstalling MAYPL requirements...")
         try:
             subprocess.run(
                 [sys.executable, "-m", "pip", "install", "-r", str(requirements_file)],
@@ -67,11 +66,11 @@ def setup_maypl(maypl_dir: str = "maypl", clone_url: str = "https://github.com/b
     
     # Set environment variable
     abs_path = maypl_path.absolute()
-    print(f"\n✓ MAYPL setup complete!")
-    print(f"\nTo use MAYPL, set the environment variable:")
+    print("\n✓ MAYPL setup complete!")
+    print("\nTo use MAYPL, set the environment variable:")
     print(f"  export MAYPL_PATH={abs_path}")
-    print(f"\nOr in Python:")
-    print(f"  import os")
+    print("\nOr in Python:")
+    print("  import os")
     print(f"  os.environ['MAYPL_PATH'] = '{abs_path}'")
     
     return str(abs_path)

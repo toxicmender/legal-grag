@@ -4,16 +4,13 @@ Orchestration module using LangChain for end-to-end reasoning pipeline.
 Coordinates retrieval, prompting, chain-of-thought reasoning, and response generation.
 """
 
-from typing import Dict, Any, Optional, List, Callable
+from typing import Dict, Any, Optional, List
 import os
 
 try:
-    from langchain.chains import SequentialChain, LLMChain
-    from langchain.prompts import PromptTemplate, ChatPromptTemplate
+    from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
     from langchain.agents import AgentExecutor, create_openai_functions_agent
-    from langchain.tools import BaseTool, Tool
-    from langchain.schema import BaseMessage
-    from langchain.callbacks import BaseCallbackHandler
+    from langchain.tools import BaseTool
     LANGCHAIN_AVAILABLE = True
 except ImportError:
     LANGCHAIN_AVAILABLE = False
@@ -203,7 +200,6 @@ class ReasoningOrchestrator:
         """Generate final response from query, context, and reasoning."""
         # Build prompt with reasoning
         if reasoning_chain:
-            reasoning_text = self.cot._format_previous_steps(reasoning_chain)
             prompt = self.prompt_builder.build_reasoning_prompt(
                 query=query,
                 context=context,

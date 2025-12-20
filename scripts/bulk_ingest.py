@@ -4,14 +4,13 @@ Bulk ingestion script for processing multiple documents.
 
 import argparse
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 import sys
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from ingestion.loader import DocumentLoader
-from ingestion.parser import DocumentParser
 from ingestion.metadata import MetadataExtractor
 from kg_construction.extractor import EntityRelationExtractor
 from kg_construction.graph_builder import GraphBuilder
@@ -40,7 +39,6 @@ def bulk_ingest(
     
     # Initialize components
     loader = DocumentLoader()
-    parser = DocumentParser()
     metadata_extractor = MetadataExtractor()
     extractor = EntityRelationExtractor()
     graph_builder = GraphBuilder()
@@ -62,7 +60,7 @@ def bulk_ingest(
             text = loader.load(file_path)
             
             # Extract metadata
-            metadata = metadata_extractor.extract_from_file(file_path)
+            metadata_extractor.extract_from_file(file_path)
             
             # Extract entities and relations
             entities = extractor.extract_entities(text)

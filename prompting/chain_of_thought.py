@@ -5,24 +5,16 @@ Implements chain-of-thought reasoning with LangChain's capabilities for
 multi-step reasoning, agent-based orchestration, and structured output.
 """
 
-from typing import List, Dict, Any, Optional, Sequence
+from typing import List, Dict, Any, Optional
 import os
 
 try:
-    from langchain.llms import BaseLLM
     from langchain.chat_models import ChatOpenAI, ChatAnthropic
-    from langchain.prompts import PromptTemplate, ChatPromptTemplate, MessagesPlaceholder
-    from langchain.chains import LLMChain, SequentialChain, SimpleSequentialChain
-    from langchain.agents import AgentExecutor, create_openai_functions_agent, AgentType
-    from langchain.tools import BaseTool
-    from langchain.schema import BaseMessage, HumanMessage, AIMessage, SystemMessage
-    from langchain.callbacks import BaseCallbackHandler
-    from langchain.schema.output_parser import StrOutputParser
-    from langchain.schema.runnable import RunnablePassthrough
+    from langchain.prompts import PromptTemplate
+    from langchain.chains import LLMChain
     LANGCHAIN_AVAILABLE = True
 except ImportError:
     LANGCHAIN_AVAILABLE = False
-    BaseLLM = None
     ChatOpenAI = None
     ChatAnthropic = None
     PromptTemplate = None
@@ -96,31 +88,27 @@ class ChainOfThought:
         # Convert subgraphs to context
         context = self._subgraphs_to_context(subgraphs)
         
-        # Build chain-of-thought prompt
-        cot_prompt = self._create_cot_prompt(query, context, max_steps)
-        
         # Execute reasoning chain
         reasoning_steps = []
         current_context = context
         current_query = query
         
         for step in range(1, max_steps + 1):
-            # Create step-specific prompt
-            step_prompt = self._create_step_prompt(
-                step=step,
-                query=current_query,
-                context=current_context,
-                previous_steps=reasoning_steps
-            )
-            
             # Execute LLM chain
             try:
-                response = self.reasoning_chain.invoke({
+                response_dict = self.reasoning_chain.invoke({
                     "step_number": step,
                     "query": current_query,
                     "context": current_context,
                     "previous_steps": self._format_previous_steps(reasoning_steps)
                 })
+                
+                # Extract string from dictionary response
+                # LLMChain.invoke() returns a dict, typically with 'text' key or output key
+                if isinstance(response_dict, dict):
+                    response = response_dict.get('text', response_dict.get('output', str(response_dict)))
+                else:
+                    response = str(response_dict)
                 
                 # Parse response
                 step_result = self._parse_reasoning_step(response, step)
@@ -207,8 +195,6 @@ Reasoning steps:"""
                 - path: Path through the graph
                 - conclusion: Final conclusion
         """
-        # Create sequential chain for multi-hop reasoning
-        chains = []
         reasoning_steps = []
         
         current_context = self._subgraphs_to_context(subgraphs)
@@ -529,7 +515,7 @@ Provide your reasoning for step {step}."""
         # Look for capitalized words/phrases
         words = text.split()
         for i, word in enumerate(words):
-            if word[0].isupper() and len(word) > 2:
+            if word and len(word) > 2 and word[0].isupper():
                 entities.append(word)
         return list(set(entities))
     

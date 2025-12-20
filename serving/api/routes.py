@@ -2,10 +2,11 @@
 API route definitions.
 """
 
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 from datetime import datetime
+from serving.session_manager import SessionManager
 
 router = APIRouter()
 

@@ -4,7 +4,6 @@ Unit tests for knowledge graph embedding module.
 
 import unittest
 import numpy as np
-from kg_embedding.embedder_interface import EmbedderInterface
 from kg_embedding.maypl_wrapper import MAYPLWrapper
 from kg_embedding.fallback_embedder import FallbackEmbedder
 from kg_embedding.cache import EmbeddingCache

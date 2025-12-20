@@ -2,7 +2,7 @@
 Glue code integrating retrieval with LLM and prompt chain.
 """
 
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any, Optional
 from .retriever import SubgraphRetriever
 from .ranking import SubgraphRanker
 from .graph_to_context import GraphToContextConverter
@@ -123,7 +123,7 @@ class RetrievalIntegration:
                 - metadata: Additional metadata
         """
         # Retrieve context
-        context = self.prepare_prompt_context(query, top_k=top_k)
+        self.prepare_prompt_context(query, top_k=top_k)
         
         # TODO: Integrate with LLM to generate response
         # This would typically involve:

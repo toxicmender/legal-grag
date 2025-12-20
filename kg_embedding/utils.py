@@ -4,7 +4,7 @@ Helper functions for embedding operations.
 Includes normalization, batching, and other utility functions.
 """
 
-from typing import List, Tuple
+from typing import List
 import numpy as np
 
 

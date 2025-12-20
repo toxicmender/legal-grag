@@ -4,7 +4,6 @@ Configuration: endpoints, database URI, LLM config, storage paths, etc.
 
 from typing import Optional, Dict, Any
 from dataclasses import dataclass, field
-from pathlib import Path
 import os
 
 
