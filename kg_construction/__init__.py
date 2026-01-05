@@ -10,6 +10,7 @@ from .extractor import EntityRelationExtractor
 from .graph_builder import GraphBuilder
 from .models import Entity, Relation, Statement, KnowledgeGraph
 from .storage import KGStorage
+from .visualization import GraphVisualizer
 
 __all__ = [
     'DocumentDistiller',
@@ -20,5 +21,6 @@ __all__ = [
     'Statement',
     'KnowledgeGraph',
     'KGStorage',
+    'GraphVisualizer',
 ]
 
