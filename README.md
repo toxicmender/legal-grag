@@ -38,13 +38,13 @@ cd legal-grag
 
 2. Create a virtual environment:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
 3. Install dependencies:
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 4. Set up MAYPL (for knowledge graph embedding):
@@ -59,12 +59,12 @@ cd MAYPL && pip install -r requirements.txt
 ```
 
 5. Set up environment variables (create a `.env` file):
-```env
+```bash
 NEO4J_URI=neo4j://localhost:7687
 NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your_password
 LLM_PROVIDER=openai
-LLM_MODEL=gpt-4
+LLM_MODEL=gpt-40-mini
 LLM_API_KEY=your_api_key
 MAYPL_PATH=/path/to/MAYPL  # Path to MAYPL repository
 ```
